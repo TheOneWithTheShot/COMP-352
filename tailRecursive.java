@@ -17,18 +17,15 @@ public class tailRecursive {
     static int[] oddonacciTailRecursive (int i) {
 
         if (i == 0) {
-            return new int[] {1,1,0}; //returns this array so the result is 0
+            return new int[] {0,0,0}; //returns this array so the result is 0
         }
         else if (i <= 3) {
             return tailRecursiveArray; //returns the array {1,1,1} so the result is 1
         }
 
         int temp = tailRecursiveArray[0]; //declare temp int that is used to move values
-
         tailRecursiveArray[0] = tailRecursiveArray[1]; //swap values
-
         tailRecursiveArray[1] = tailRecursiveArray[2]; //swap values
-
         tailRecursiveArray[2] = temp + tailRecursiveArray[0] + tailRecursiveArray[1]; //add values
 
         return oddonacciTailRecursive(i - 1); //tail recursive method

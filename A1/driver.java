@@ -1,4 +1,4 @@
-/**
+package A1; /**
  * Driver class used to test the linearComplexity and exponentialComplexity
  * Student name: Xavier Guertin
  * Student id: 40213525
@@ -13,7 +13,7 @@ import java.io.IOException;
 public class driver {
 
     //path of where I want the report file to be created, you have to modify this path respectively to your system
-    private static String resultsFile = "C:\\Users\\xavie\\OneDrive - Concordia University - Canada\\2nd year\\3rd session\\Workspace JB\\COMP-352-A1\\Reports\\OddoOut.txt";
+    private static String resultsFile = "C:\\Users\\xavie\\OneDrive - Concordia University - Canada\\2nd year\\3rd session\\Workspace JB\\COMP-352\\A1\\Reports\\OddoOut.txt";
 
     public static void main(String[] args) {
 

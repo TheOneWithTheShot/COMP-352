@@ -1,3 +1,5 @@
+package A1;
+
 /**
  * exponentialComplexity class that has the algorithm of the exponential recursive method
  * Student name: Xavier Guertin

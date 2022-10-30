@@ -1,3 +1,5 @@
+package A1;
+
 /**
  * linearComplexity class that has the algorithm of the linear recursive method
  * Student name: Xavier Guertin

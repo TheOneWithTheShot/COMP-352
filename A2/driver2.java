@@ -6,7 +6,7 @@ package A2;
  */
 import java.io.*;
 import java.util.Scanner;
-import recursiveAlgo;
+//import recursiveAlgo;
 
 public class driver2 {
 
@@ -25,7 +25,7 @@ public class driver2 {
 
         //calls recursive algorithm with the sets and prints to out.txt
         //which return the message to print to the report.
-        writeToReportFile(outputFile, recursiveAlgo.recursive(getInput(inputFile)));
+//        writeToReportFile(outputFile, recursiveAlgo.recursive(getInput(inputFile)));
 
         writeToReportFile(outputFile, "Stack Method results:\n");
 

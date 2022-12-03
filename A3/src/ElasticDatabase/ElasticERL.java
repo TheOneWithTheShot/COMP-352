@@ -1,18 +1,17 @@
 package A3.src.ElasticDatabase;
-import java.util.Random; 
-import A3.src.ElasticDatabase.DatabaseEntry;
+import java.util.Random;
 
 
-public class ElasticERL 
+public class ElasticERL<E>
 {
 	//We have an integer for the threshold and one for an array of entries. 
 	private int EINThreshold;
-	private DatabaseEntry smallEntries[]; 
+	private Equipment smallEntries[];
 	
 	//Default Constructor (ignore for now)
 	public ElasticERL()
 	{
-		this(100);
+
 	}
 	
 	//Constructor which allows user to choose size
@@ -34,7 +33,7 @@ public class ElasticERL
 		if(Size <= 1000)
 		{
 			//Initialize an array of DatabaseEntry to the size
-			smallEntries = new DatabaseEntry[Size];
+			smallEntries = new Equipment[Size];
 		}
 		
 		//if we have a larger amount of entries

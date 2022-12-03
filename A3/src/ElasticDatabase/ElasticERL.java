@@ -5,18 +5,16 @@ import java.util.Random;
 public class ElasticERL<E>
 {
 	//We have an integer for the threshold and one for an array of entries. 
-	private int EINThreshold;
-	private Equipment smallEntries[];
+	protected int EINThreshold;
+	protected int size;
 	
 	//Default Constructor (ignore for now)
-	public ElasticERL()
-	{
+	public ElasticERL() {
 
 	}
 
 	//Constructor which allows user to choose size
-	public ElasticERL(int Size)
-	{
+	public ElasticERL(int Size) {
 		//Check for valid size
 		if(Size < 100 || Size > 500000)
 		{
@@ -24,25 +22,28 @@ public class ElasticERL<E>
 			System.exit(0);
 		}
 		//In case of valid size, initialize the variable to that size
-		else
-		{
+		else {
 		this.EINThreshold = Size;
 		}
 
 		//If we have a small number of entries
-		if(Size <= 1000)
-		{
+		if(Size <= 1000) {
 			//Initialize an array of DatabaseEntry to the size
-			smallEntries = new Equipment[Size];
+			//Do Sequence
 		}
 
 		//if we have a larger amount of entries
-		if(Size > 1000)
-		{
-
+		if(Size > 1000) {
+			//Do hash table
 		}
 	}
 
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
 
 	public int getEINThreshold() 
 	{
@@ -70,6 +71,6 @@ public class ElasticERL<E>
       	return myRandomNumber + new Random().nextInt(9 * myRandomNumber);
 	}
 
-	
+
 
 }

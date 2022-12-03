@@ -6,6 +6,7 @@ public class main {
 
     private final static int IDLENGTH = 8;
     protected static Sequence<Equipment> sequenceADT;
+    protected static HashTable<Equipment> hashTableADT;
     protected static Scanner scanner = new Scanner(System.in);
 
     /**
@@ -47,9 +48,6 @@ public class main {
     }
 
     public static void main(String[] args) {
-
-        sequenceADT = new Sequence<>();
-
         boolean isValid = false;
         int option = 0;
         while (!isValid){
@@ -79,7 +77,13 @@ public class main {
                 isValid = true;
             }
         }
-        sequenceADT.setEINThreshold(threshold);
+        if (threshold >= 1000) {
+            hashTableADT = new HashTable<>();
+            hashTableADT.setEINThreshold(threshold);
+        } else {
+            sequenceADT = new Sequence<>();
+            sequenceADT.setEINThreshold(threshold);
+        }
         readChosenFile(option);
     }
 }

@@ -2,7 +2,6 @@ package A3.src.ElasticDatabase;
 
 import java.io.*;
 import java.util.Scanner;
-
 public class main {
 
     private final static int IDLENGTH = 8;
@@ -14,9 +13,9 @@ public class main {
      * @param option
      */
     public static void readChosenFile(int option) {
-        String path1 = "./tests/EHITS_test_file1.txt";
-        String path2 = "./tests/EHITS_test_file2.txt";
-        String path3 = "./tests/EHITS_test_file3.txt";
+        String path1 = "A3/src/ElasticDatabase/tests/EHITS_test_file1.txt";
+        String path2 = "tests/EHITS_test_file2.txt";
+        String path3 = "tests/EHITS_test_file3.txt";
         File fileToOpen = null;
 
         if (option == 1) {
@@ -35,8 +34,8 @@ public class main {
             System.out.println("Cannot open file");
             System.exit(0);
         }
-        int counter = 0;
-        while (inStream.hasNextLine()) {
+        int counter = 1;
+        while (inStream.hasNextLine() && counter < sequenceADT.getEINThreshold()) {
             long key = inStream.nextInt();
             counter++;
 
@@ -44,6 +43,7 @@ public class main {
 
 //            sequenceADT.add(key, tempName);
         }
+        System.out.println(counter);
     }
 
     public static void main(String[] args) {

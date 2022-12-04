@@ -62,7 +62,7 @@ public class main {
 
     /**
      *  add an entry for the given key and value
-     * @param key
+     * @param key - key
      */
     public static void add(int key, String name){
         Equipment temp = new Equipment(name);
@@ -75,12 +75,12 @@ public class main {
             sequenceADT.add(key, temp);
         }
         System.out.println("The key has been successfully added.");
-//        switchtoSequenceOrHash();
+//        switchSequenceOrHash();
     }
 
     /**
      * remove the entry for the given key
-     * @param key
+     * @param key - key
      */
     public static void remove(int key) {
         if(usingHashTableADT) {
@@ -92,12 +92,12 @@ public class main {
         }
 
         System.out.println("Removed Successfully");
-//        switchtoSequenceOrHash();
+//        switchSequenceOrHash();
     }
 
     /**
      * return the values of the given key
-     * @param key
+     * @param key - key
      */
     public static void getValues(int key) {
         Equipment temp = (usingHashTableADT) ? hashTableADT.getValues(key) : sequenceADT.getValues(key);
@@ -111,28 +111,24 @@ public class main {
 
     /**
      * return the key for the successor of key
-     * @param key
+     * @param key - key
      */
     public static void nextKey(int key) {
         int nextKey = (usingHashTableADT) ? hashTableADT.nextKey(key) : sequenceADT.nextKey(key);
 
-        if(nextKey == 0) {
-            System.out.println("\nKey: " + key + ", doesn't have any next key.");
-        } else {
+        if(nextKey != 0) {
             System.out.println("Current key: " + key + ". Next key is: " + nextKey);
         }
     }
 
     /**
      * return the key for the predecessor of key
-     * @param key
+     * @param key - key
      */
     public static void prevKey(int key){
         int prevKey = (usingHashTableADT) ? hashTableADT.prevKey(key) : sequenceADT.prevKey(key);
 
-        if(prevKey == 0) {
-            System.out.println("\nKey: " + key + ", doesn't have any previous key.");
-        } else {
+        if(prevKey != 0) {
             System.out.println("Current key: " + key + ". Previous key is: " + prevKey);
         }
     }
@@ -140,8 +136,8 @@ public class main {
     /**
      * returns the number of keys that are within the specified range of
      * the two keys key1 and key2
-     * @param key1
-     * @param key2
+     * @param key1 - First key
+     * @param key2 - Second Keyy
      */
     public void rangeKey(int key1, int key2) {
         int counter = 0;
@@ -173,16 +169,30 @@ public class main {
      * Generate a non-existing key of length 8
      */
     public static void generateNonExistingKey() {
+        Equipment tempName;
+        boolean unique = false;
+        int key = 0;
+
         if (usingHashTableADT){
-            int size = hashTableADT.get_size();
-            Equipment tempName = new Equipment("Equipment: "+ size);
-            int key = generateRandomKey();
+            tempName = new Equipment("Equipment: " + hashTableADT.get_size());
+            while (!unique) {
+                key = generateRandomKey();
+                String result = String.valueOf(hashTableADT.getValues(key));
+                if (result != null) {
+                    unique = true;
+                }
+            }
             hashTableADT.add(key, tempName);
         } else {
-            int size = sequenceADT.get_size();
-            Equipment tempName = new Equipment("Equipment: "+ size);
-            int key = generateRandomKey();
-            sequenceADT.add(key, tempName);
+            tempName = new Equipment("Equipment: " + sequenceADT.get_size());
+            while (!unique) {
+                key = generateRandomKey();
+                String result = String.valueOf(sequenceADT.getValues(key));
+                if (result != null) {
+                    unique = true;
+                }
+            }
+            hashTableADT.add(key, tempName);
         }
         System.out.print("Generation of non-existing key has been been done.");
     }

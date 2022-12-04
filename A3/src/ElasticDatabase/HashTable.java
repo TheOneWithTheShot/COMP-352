@@ -1,5 +1,6 @@
 package A3.src.ElasticDatabase;
 import java.util.Hashtable;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 
@@ -44,12 +45,22 @@ public class HashTable<E> extends ElasticERL<E> {
         return null;
     }
 
+    public int search(int key) throws NoSuchElementException{
+        for (int i = 0; i< _size; ++i) {
+            if(hashTable.get(i).getKey() == key) {
+                return i;
+            }
+        }
+        throw new NoSuchElementException();
+    }
+
     //return the values of the given key
     public E getValues(int key) {
         try {
-            return hashTable.get(key).getValue();
-        } catch (NullPointerException e)  {
-            System.out.println("Key " + key + " does not exist");
+            int index = search(key);
+            return hashTable.get(index).getValue();
+
+        } catch (NoSuchElementException e) {
         }
         return null;
     }

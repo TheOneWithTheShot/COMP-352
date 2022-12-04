@@ -1,11 +1,11 @@
 package A3.src.ElasticDatabase;
 
-public class DatabaseEntry implements Comparable<DatabaseEntry> {
+public class DatabaseEntry<E> implements Comparable<DatabaseEntry> {
     private int key;
-    private String value;
+    private E value;
 
     //constructor
-    public DatabaseEntry(int key, String value) {
+    public DatabaseEntry(int key, E value) {
         this.key = key;
         this.value = value;
     }
@@ -19,7 +19,7 @@ public class DatabaseEntry implements Comparable<DatabaseEntry> {
         this.key = key;
     }
 
-    public String getValue() {
+    public E getValue() {
         return value;
     }
 

@@ -1,16 +1,23 @@
 package A3.src.ElasticDatabase;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.Random;
+
+import static A3.src.ElasticDatabase.main.sequenceADT;
 
 
 public class ElasticERL<E>
 {
 	//We have an integer for the threshold and one for an array of entries. 
 	protected int EINThreshold;
-	protected int size;
+	protected int _size;
+	private final static int LENGTHEQUIPMENT = 8;
 	
 	//Default Constructor (ignore for now)
 	public ElasticERL() {
-
+		this(0);
 	}
 
 	//Constructor which allows user to choose size
@@ -38,11 +45,11 @@ public class ElasticERL<E>
 		}
 	}
 
-	public int getSize() {
-		return size;
+	public int get_size() {
+		return _size;
 	}
-	public void setSize(int size) {
-		this.size = size;
+	public void set_size(int _size) {
+		this._size = _size;
 	}
 
 	public int getEINThreshold() 
@@ -62,15 +69,5 @@ public class ElasticERL<E>
 		{
 		this.EINThreshold = Size;
 		}
-	} 
-	
-	//A method to generate a random 8-digit number
-	public int generate() 
-	{
-		int myRandomNumber = (int) Math.pow(10, 8 - 1);
-      	return myRandomNumber + new Random().nextInt(9 * myRandomNumber);
 	}
-
-
-
 }

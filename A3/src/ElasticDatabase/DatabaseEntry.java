@@ -30,7 +30,7 @@ public class DatabaseEntry<E> implements Comparable<DatabaseEntry> {
     //compare method
     @Override
     public int compareTo(DatabaseEntry o) {
-        return Long.compare(this.getKey(), o.getKey());
+        return Integer.compare(this.getKey(), o.getKey());
     }
 
 }

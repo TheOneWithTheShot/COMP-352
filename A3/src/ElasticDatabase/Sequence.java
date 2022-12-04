@@ -16,8 +16,8 @@ public class Sequence<E> extends ElasticERL<E> {
     }
 
     //add an entry for the given key and value;
-    public void add(long key, E value) {
-        if(Long.toString(key).length() != 8) {
+    public void add(int key, E value) {
+        if(Integer.toString(key).length() != 8) {
             //System.out.println("Sequence Error: Length is not 8.\n");
             return;
         }
@@ -27,21 +27,21 @@ public class Sequence<E> extends ElasticERL<E> {
             this.remove(key);
         } catch(Exception e) {
             sequence.add(new DatabaseEntry<E>(key, value));
-            size++;
+            _size++;
             return;
         }
         //System.out.println("Found duplicate for key " + key + ".\n");      
         sequence.add(new DatabaseEntry<E>(key, value));
-        size++;
+        _size++;
     }
 
     //remove the entry for the given key
-    public DatabaseEntry<E> remove(long key) {
+    public DatabaseEntry<E> remove(int key) {
         try {
             int index = search(key);
             DatabaseEntry<E> temp = sequence.get(index);
             sequence.remove(index);
-            size--;
+            _size--;
             return temp;
 
         } catch (NullPointerException e) {
@@ -50,7 +50,7 @@ public class Sequence<E> extends ElasticERL<E> {
         }
     }
 
-    public E getValues(long key) {
+    public E getValues(int key) {
         try {
             int index = search(key);
             return sequence.get(index).getValue();
@@ -62,7 +62,7 @@ public class Sequence<E> extends ElasticERL<E> {
         return null;
     }
 
-    public long nextKey(long key) {
+    public int nextKey(int key) {
         try {
             int index = search(key);
             if(sequence.get(index+1) != null) {
@@ -77,7 +77,7 @@ public class Sequence<E> extends ElasticERL<E> {
         return 0;
     }
 
-    public long prevKey(long key) {
+    public int prevKey(int key) {
         try {
             int index = search(key);
             if(sequence.get(index-1) != null) {
@@ -92,8 +92,8 @@ public class Sequence<E> extends ElasticERL<E> {
         return 0;
     }
 
-    public int search(long key) throws NoSuchElementException {
-        for (int i = 0; i<size; ++i) {
+    public int search(int key) throws NoSuchElementException {
+        for (int i = 0; i< _size; ++i) {
             if(sequence.get(i).getKey() == key) {
                 return i;
             }
@@ -102,8 +102,8 @@ public class Sequence<E> extends ElasticERL<E> {
     }
 
     //return all keys in ElastricERL as a sorted sequence;
-    public Long[] allKeys() {
-        Long[] result = new Long[super.getSize()];
+    public Integer[] allKeys() {
+        Integer[] result = new Integer[super.get_size()];
         int ctr = 0;
         for(DatabaseEntry<E> each : sequence) {
             result[ctr] = each.getKey();
@@ -114,10 +114,10 @@ public class Sequence<E> extends ElasticERL<E> {
     }
 
     //sorting the sequence using insertion Sort
-    public void insertionSort(Long[] keys) {
+    public void insertionSort(Integer[] keys) {
         int n = keys.length;
         for(int i = 1; i< n; ++i) {
-            long current = keys[i];
+            int current = keys[i];
             int j = i-1;
 
             while(j >= 0 && current < keys[j]) {

@@ -1,4 +1,4 @@
-gitpackage A3.src.ElasticDatabase;
+package A3.src.ElasticDatabase;
 
 //This class defines an entry object that holds a integer key and a String value 
 public class Equipment<E>

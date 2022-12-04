@@ -4,14 +4,14 @@ import java.util.Set;
 
 
 public class HashTable<E> extends ElasticERL<E> {
-    Hashtable<Integer, DatabaseEntry<E>> table;
+    Hashtable<Integer, DatabaseEntry<E>> hashTable;
 
     public HashTable() {
         this(1000);
     }
     public HashTable(int n) {
         super();
-        table = new Hashtable<Integer, DatabaseEntry<E>>(n);
+        hashTable = new Hashtable<Integer, DatabaseEntry<E>>(n);
     }
 
     //add an entry for the given key and value;
@@ -23,19 +23,19 @@ public class HashTable<E> extends ElasticERL<E> {
 
         //checks if key exists
         DatabaseEntry<E> entry = new DatabaseEntry<>(key, value);
-        if(table.containsKey(key)) {
+        if(hashTable.containsKey(key)) {
             //System.out.println("Found duplicate for key " + key + ".\n");
-            table.replace(key, entry);
+            hashTable.replace(key, entry);
             return;
         }
-        table.put(key, entry);
+        hashTable.put(key, entry);
         _size++;
     }
 
     //remove the entry for the given key
     public DatabaseEntry<E> remove(int key) {
         try {
-            DatabaseEntry<E> temp = table.remove(key);
+            DatabaseEntry<E> temp = hashTable.remove(key);
             _size--;
             return temp;
         } catch (NullPointerException e) {
@@ -47,7 +47,7 @@ public class HashTable<E> extends ElasticERL<E> {
     //return the values of the given key
     public E getValues(int key) {
         try {
-            return table.get(key).getValue();
+            return hashTable.get(key).getValue();
         } catch (NullPointerException e)  {
             System.out.println("Key " + key + " does not exist");
         }
@@ -56,7 +56,7 @@ public class HashTable<E> extends ElasticERL<E> {
 
     //return the key for the successor of key
     public int nextKey(int key) {
-        Set<Integer> keys = table.keySet();
+        Set<Integer> keys = hashTable.keySet();
         Integer[] allKeys = keys.toArray(new Integer[keys.size()]);
 
         for(int i = 0; i<allKeys.length; ++i) {
@@ -77,7 +77,7 @@ public class HashTable<E> extends ElasticERL<E> {
     //return the key for the predecessor of key
     public int prevKey(int key) {
         //convert key set into array
-        Set<Integer> keys = table.keySet();
+        Set<Integer> keys = hashTable.keySet();
         Integer[] allKeys = keys.toArray(new Integer[keys.size()]);
 
         for(int i = 0; i<allKeys.length; ++i) {
@@ -98,7 +98,7 @@ public class HashTable<E> extends ElasticERL<E> {
     //returns all keys sorted using heap sort
     public Integer[] allKeys() {
         //extract keys out from the hash table and converts it into an array
-        Set<Integer> keys = table.keySet();
+        Set<Integer> keys = hashTable.keySet();
         Integer[] arr = keys.toArray(new Integer[keys.size()]);
         System.out.println("size is:"+ arr.length);
 

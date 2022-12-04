@@ -18,21 +18,20 @@ public class Sequence<E> extends ElasticERL<E> {
     //add an entry for the given key and value;
     public void add(int key, E value) {
         if(Integer.toString(key).length() != 8) {
-            //System.out.println("Sequence Error: Length is not 8.\n");
             return;
         }
 
-        //clear the old key
+        // try catch that removes old key. If none found, adds a new key.
         try {
             this.remove(key);
         } catch(Exception e) {
             sequence.add(new DatabaseEntry<E>(key, value));
-            _size++;
+            set_size(_size++);
             return;
         }
         //System.out.println("Found duplicate for key " + key + ".\n");      
         sequence.add(new DatabaseEntry<E>(key, value));
-        _size++;
+        set_size(_size++);
     }
 
     //remove the entry for the given key
@@ -41,7 +40,7 @@ public class Sequence<E> extends ElasticERL<E> {
             int index = search(key);
             DatabaseEntry<E> temp = sequence.get(index);
             sequence.remove(index);
-            _size--;
+            set_size(_size--);
             return temp;
 
         } catch (NullPointerException e) {
@@ -101,7 +100,7 @@ public class Sequence<E> extends ElasticERL<E> {
         throw new NoSuchElementException();
     }
 
-    //return all keys in ElastricERL as a sorted sequence;
+    //return all keys in ElasticERL as a sorted sequence;
     public Integer[] allKeys() {
         Integer[] result = new Integer[super.get_size()];
         int ctr = 0;
@@ -113,7 +112,7 @@ public class Sequence<E> extends ElasticERL<E> {
         return result;
     }
 
-    //sorting the sequence using insertion Sort
+    //sorting the sequence using insertion Sort O(n^2)
     public void insertionSort(Integer[] keys) {
         int n = keys.length;
         for(int i = 1; i< n; ++i) {

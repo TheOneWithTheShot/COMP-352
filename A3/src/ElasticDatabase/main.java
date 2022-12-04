@@ -12,7 +12,6 @@ public class main {
     protected static boolean usingSequenceADT;
     protected static boolean programIsRunning = true;
 
-
     /**
      * function that returns the size of the ADT
      * @return
@@ -20,6 +19,7 @@ public class main {
     public static int get_size() {
         return (usingHashTableADT) ? hashTableADT.get_size() : sequenceADT.get_size();
     }
+
     /**
      * return all keys in ElasticERL as a sorted sequence
      */
@@ -61,6 +61,115 @@ public class main {
     }
 
     /**
+     *  add an entry for the given key and value
+     * @param key
+     */
+    public static void add(int key, String name){
+        Equipment temp = new Equipment(name);
+
+        if(usingHashTableADT) {
+            System.out.println("\nThe program is adding: "+ key +" to the hash table ADT.");
+            hashTableADT.add(key, temp);
+        } else {
+            System.out.println("\nThe program is adding: "+ key +" to the sequence ADT.");
+            sequenceADT.add(key, temp);
+        }
+        System.out.println("The key has been successfully added.");
+//        switchtoSequenceOrHash();
+    }
+
+    /**
+     * remove the entry for the given key
+     * @param key
+     */
+    public static void remove(int key) {
+        if(usingHashTableADT) {
+            System.out.println("\nThe program is removing this key: "+ key +" from the hash table ADT.");
+            hashTableADT.remove(key);
+        } else {
+            System.out.println("\nThe program is removing this key: "+ key +" from the sequence ADT.");
+            sequenceADT.remove(key);
+        }
+
+        System.out.println("Removed Successfully");
+//        switchtoSequenceOrHash();
+    }
+
+    /**
+     * return the values of the given key
+     * @param key
+     */
+    public static void getValues(int key) {
+        Equipment temp = (usingHashTableADT) ? hashTableADT.getValues(key) : sequenceADT.getValues(key);
+
+        if(temp == null) {
+            System.out.println("No keys have been found");
+        } else {
+            System.out.println("Here's the value of key " + key +": " + temp);
+        }
+    }
+
+    /**
+     * return the key for the successor of key
+     * @param key
+     */
+    public static void nextKey(int key) {
+        int nextKey = (usingHashTableADT) ? hashTableADT.nextKey(key) : sequenceADT.nextKey(key);
+
+        if(nextKey == 0) {
+            System.out.println("\nKey: " + key + ", doesn't have any next key.");
+        } else {
+            System.out.println("Current key: " + key + ". Next key is: " + nextKey);
+        }
+    }
+
+    /**
+     * return the key for the predecessor of key
+     * @param key
+     */
+    public static void prevKey(int key){
+        int prevKey = (usingHashTableADT) ? hashTableADT.prevKey(key) : sequenceADT.prevKey(key);
+
+        if(prevKey == 0) {
+            System.out.println("\nKey: " + key + ", doesn't have any previous key.");
+        } else {
+            System.out.println("Current key: " + key + ". Previous key is: " + prevKey);
+        }
+    }
+
+    /**
+     * returns the number of keys that are within the specified range of
+     * the two keys key1 and key2
+     * @param key1
+     * @param key2
+     */
+    public void rangeKey(int key1, int key2) {
+        int counter = 0;
+        if(usingHashTableADT) {
+            System.out.println("\nSearching for the number of keys within the following range: [" + key1 + ", " + key2 + "] in the hash table ADT.");
+            for(int i = key1; i <= key2 ; i++) {
+                for (int j = key1; j <= key2; ++j) {
+                    if (sequenceADT.sequence.get(i).getKey() == i) {
+                        counter++;
+                    }
+                }
+            }
+            System.out.println("There are: " + counter + " keys within the following range: [" + key1 + ", " + key2 + "]");
+        } else {
+            System.out.println("\nSearching for the number of keys within the following range: [" + key1 + ", " + key2 + "] in the hash table ADT.");
+            for(int i = key1; i <= key2 ; i++) {
+                for (int j = key1; j <= key2; ++j) {
+                    if (hashTableADT.hashTable.get(i).getKey() == i) {
+                        counter++;
+                    }
+                }
+            }
+            System.out.println("There are: " + counter + " keys within the following range: [" + key1 + ", " + key2 + "]");
+        }
+    }
+
+
+    /**
      * Generate a non-existing key of length 8
      */
     public static void generateNonExistingKey() {
@@ -82,8 +191,7 @@ public class main {
      * A method to generate a random 8-digit number
      * @return
      */
-    public static int generateRandomKey()
-    {
+    public static int generateRandomKey() {
         int randomNum = (int) Math.pow(10, 8 - 1);
         return randomNum + new Random().nextInt(9 * randomNum);
     }

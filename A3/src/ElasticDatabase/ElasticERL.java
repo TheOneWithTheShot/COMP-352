@@ -5,11 +5,11 @@ public class ElasticERL<E>
 {
 	//We have an integer for the threshold and one for an array of entries. 
 	protected int EINThreshold;
-	protected int _size;
+	protected int _size = 0;
 	
 	//Default Constructor (ignore for now)
 	public ElasticERL() {
-		this(0);
+
 	}
 
 	//Constructor which allows user to choose size
@@ -23,17 +23,6 @@ public class ElasticERL<E>
 		//In case of valid size, initialize the variable to that size
 		else {
 		this.EINThreshold = Size;
-		}
-
-		//If we have a small number of entries
-		if(Size <= 1000) {
-			//Initialize an array of DatabaseEntry to the size
-			//Do Sequence
-		}
-
-		//if we have a larger amount of entries
-		if(Size > 1000) {
-			//Do hash table
 		}
 	}
 

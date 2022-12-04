@@ -25,7 +25,7 @@ public class main {
      */
     public static void allKeys() {
         PrintWriter pw = null;
-        String output = "log.txt";
+        String output = "A3/src/ElasticDatabase/logs/log.txt";
         File log = new File(output);
         try {
             System.out.println("Creating a log file to store all the keys.");
@@ -50,7 +50,6 @@ public class main {
             pw.println("No keys to print");
         } else {
             for(Integer each : arrayKeys) {
-                System.out.println(each);
                 pw.println(each);
             }
         }
@@ -61,7 +60,9 @@ public class main {
         System.out.println("A log file has been generated.");
     }
 
-    //Generate a non-existing key of length 8
+    /**
+     * Generate a non-existing key of length 8
+     */
     public static void generateNonExistingKey() {
         if (usingHashTableADT){
             int size = hashTableADT.get_size();
@@ -74,9 +75,13 @@ public class main {
             int key = generateRandomKey();
             sequenceADT.add(key, tempName);
         }
-        System.out.print("Generating Successfully");
+        System.out.print("Generation of non-existing key has been been done.");
     }
-    //A method to generate a random 8-digit number
+
+    /**
+     * A method to generate a random 8-digit number
+     * @return
+     */
     public static int generateRandomKey()
     {
         int randomNum = (int) Math.pow(10, 8 - 1);
@@ -89,8 +94,8 @@ public class main {
      */
     public static void readChosenFile(int option) {
         String path1 = "A3/src/ElasticDatabase/tests/EHITS_test_file1.txt";
-        String path2 = "tests/EHITS_test_file2.txt";
-        String path3 = "tests/EHITS_test_file3.txt";
+        String path2 = "A3/src/ElasticDatabase/tests/EHITS_test_file2.txt";
+        String path3 = "A3/src/ElasticDatabase/tests/EHITS_test_file3.txt";
         File fileToOpen = null;
 
         if (option == 1) {
@@ -140,8 +145,9 @@ public class main {
      */
     private static int showMenu() {
         while (true) {
-            System.out.println();
-            System.out.println("Program's menu:");
+            System.out.println("\n========================");
+            System.out.println("==== Program's menu ====");
+            System.out.println("========================");
             System.out.println("Please select what you want to do\n");
             System.out.println("1. Show all keys (allKeys)");
             System.out.println("2. Generate new non-existing key of 8 digits(generate)");
@@ -154,7 +160,7 @@ public class main {
             System.out.println("9. Exit Program");
             int option = scanner.nextInt();
 
-            if (option < 1 || option > 8) {
+            if (option < 1 || option > 9) {
                 System.out.println("Please enter a valid option. Try again.\n");
             } else {
                 return option;
@@ -198,7 +204,7 @@ public class main {
         boolean isValid = false;
         int option = 0;
         while (!isValid){
-            System.out.println("Welcome to EHITS.\n");
+            System.out.println("\n\n----------Welcome to EHITS----------\n");
             System.out.println("Please select which file you want to test:");
             System.out.println("1. test file 1 containing 50 000 entries");
             System.out.println("2. test file 2 containing 50 000 entries");

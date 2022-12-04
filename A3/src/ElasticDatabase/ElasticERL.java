@@ -1,11 +1,4 @@
 package A3.src.ElasticDatabase;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.Random;
-
-import static A3.src.ElasticDatabase.main.sequenceADT;
 
 
 public class ElasticERL<E>
@@ -13,7 +6,6 @@ public class ElasticERL<E>
 	//We have an integer for the threshold and one for an array of entries. 
 	protected int EINThreshold;
 	protected int _size;
-	private final static int LENGTHEQUIPMENT = 8;
 	
 	//Default Constructor (ignore for now)
 	public ElasticERL() {

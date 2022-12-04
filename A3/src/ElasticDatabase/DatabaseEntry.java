@@ -11,7 +11,7 @@ public class DatabaseEntry<E> implements Comparable<DatabaseEntry> {
     }
 //
     //getters and setters
-    public long getKey() {
+    public int getKey() {
         return key;
     }
 

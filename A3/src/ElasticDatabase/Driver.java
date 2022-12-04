@@ -3,7 +3,7 @@ package A3.src.ElasticDatabase;
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
-public class main {
+public class Driver {
 
     protected static Sequence<Equipment> sequenceADT;
     protected static HashTable<Equipment> hashTableADT;
@@ -14,7 +14,7 @@ public class main {
 
     /**
      * method that returns the size of the ADT
-     * @return
+     * @return - returns the size
      */
     public static int get_size() {
         return (usingHashTableADT) ? hashTableADT.get_size() : sequenceADT.get_size();
@@ -164,7 +164,6 @@ public class main {
         }
     }
 
-
     /**
      * Generate a non-existing key of length 8
      */
@@ -199,7 +198,7 @@ public class main {
 
     /**
      * A method to generate a random 8-digit number
-     * @return
+     * @return - returns random 8-digit number
      */
     public static int generateRandomKey() {
         int randomNum = (int) Math.pow(10, 8 - 1);
@@ -208,7 +207,7 @@ public class main {
 
     /**
      * method to read the file that the user selected
-     * @param option
+     * @param option - opens chosen test file and read data based on threshold
      */
     public static void readChosenFile(int option) {
         String path1 = "A3/src/ElasticDatabase/tests/EHITS_test_file1.txt";
@@ -220,7 +219,7 @@ public class main {
             fileToOpen = new File(path1);
         } else if (option == 2) {
             fileToOpen = new File(path2);
-        } else if (option == 3) {
+        } else {
             fileToOpen = new File(path3);
         }
 
@@ -259,7 +258,7 @@ public class main {
 
     /**
      * method that shows the program's menu
-     * @return
+     * @return - return option chosen by user
      */
     private static int showMenu() {
         while (true) {
@@ -303,7 +302,7 @@ public class main {
             while (!isValid) {
                 System.out.println("What is the key that you want to insert(8 digits):");
                 key = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -317,7 +316,7 @@ public class main {
             while (!isValid) {
                 System.out.println("What is the key that you want to remove(8 digits):");
                 key = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -329,7 +328,7 @@ public class main {
             while (!isValid) {
                 System.out.println("What is the key that you want the value(8 digits):");
                 key = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -341,7 +340,7 @@ public class main {
             while (!isValid) {
                 System.out.println("What is the key that you want to know the next key(8 digits):");
                 key = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -353,7 +352,7 @@ public class main {
             while (!isValid) {
                 System.out.println("What is the key that you want to know the previous key(8 digits):");
                 key = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -364,17 +363,18 @@ public class main {
             while (!isValid) {
                 System.out.println("What is the first key(8 digits):");
                 key = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
                 }
             }
             isValid = false;
+            scanner = null;
             while (!isValid) {
                 System.out.println("What is the second key(8 digits):");
                 key2 = scanner.nextInt();
-                if (key< 8 || key>8) {
+                if (key2!=8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -385,9 +385,10 @@ public class main {
             exitProgram();
         }
     }
+
     /**
      * Start program loop
-     * @return
+     * 
      */
     private static void startProgramLoop(){
         while (programIsRunning) {
@@ -396,6 +397,10 @@ public class main {
         }
     }
 
+    /**
+     * Main method
+     * @param args - main
+     */
     public static void main(String[] args) {
         boolean isValid = false;
         int option = 0;

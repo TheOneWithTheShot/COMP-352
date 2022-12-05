@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------
+//Assignment 3
+//Written by: Bayazeed Rahman (40190096) and Xavier Guertin (40213535)
+//-----------------------------------------------------------------
+
 package A3.src.ElasticDatabase;
 
 //This class defines an entry object that holds a integer key and a String value 

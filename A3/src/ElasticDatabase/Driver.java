@@ -1,8 +1,14 @@
+//-----------------------------------------------------------------
+//Assignment 3
+//Written by: Bayazeed Rahman (40190096) and Xavier Guertin (40213535)
+//-----------------------------------------------------------------
+
 package A3.src.ElasticDatabase;
 
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
+
 
 public class Driver {
     protected static Sequence<Equipment> sequenceADT;

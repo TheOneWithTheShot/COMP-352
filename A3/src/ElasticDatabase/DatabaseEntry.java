@@ -5,37 +5,49 @@
 
 package A3.src.ElasticDatabase;
 
-public class DatabaseEntry<E> implements Comparable<DatabaseEntry> {
+public class DatabaseEntry<E> {
     private int key;
     private E value;
 
-    //constructor
+    /**
+     * parameterized constructor
+     * @param key - key
+     * @param value - value of key
+     */
     public DatabaseEntry(int key, E value) {
         this.key = key;
         this.value = value;
     }
-//
-    //getters and setters
+
+    /**
+     * get key
+     * @return - returns key
+     */
     public int getKey() {
         return key;
     }
 
+    /**
+     * set key value
+     * @param key - key
+     */
     public void setKey(int key) {
         this.key = key;
     }
 
+    /**
+     * get value of key
+     * @return - returns value
+     */
     public E getValue() {
         return value;
     }
 
+    /**
+     * set value of key
+     * @param value - value
+     */
     public void setValue(E value) {
         this.value = value;
     }
-
-    //compare method
-    @Override
-    public int compareTo(DatabaseEntry o) {
-        return Integer.compare(this.getKey(), o.getKey());
-    }
-
 }

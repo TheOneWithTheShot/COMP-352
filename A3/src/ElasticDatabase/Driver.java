@@ -249,7 +249,14 @@ public class Driver {
             System.exit(0);
         }
         int counter = 0;
-        while (inStream.hasNextLine() && counter < sequenceADT.getEINThreshold()) {
+        int threshold = 0;
+
+        if (usingHashTableADT == true) {
+            threshold = hashTableADT.getEINThreshold();
+        } else {
+            threshold = sequenceADT.getEINThreshold();
+        }
+        while (inStream.hasNextLine() && counter < threshold) {
             int key = inStream.nextInt();
             counter++;
 

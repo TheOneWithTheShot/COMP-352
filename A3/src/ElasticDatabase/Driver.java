@@ -3,8 +3,8 @@ package A3.src.ElasticDatabase;
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
-public class Driver {
 
+public class Driver {
     protected static Sequence<Equipment> sequenceADT;
     protected static HashTable<Equipment> hashTableADT;
     protected static Scanner scanner = new Scanner(System.in);
@@ -83,15 +83,17 @@ public class Driver {
      * @param key - key
      */
     public static void remove(int key) {
+        DatabaseEntry result = null;
         if(usingHashTableADT) {
             System.out.println("\nThe program is removing this key: "+ key +" from the hash table ADT.");
-            hashTableADT.remove(key);
+            result = hashTableADT.remove(key);
         } else {
             System.out.println("\nThe program is removing this key: "+ key +" from the sequence ADT.");
-            sequenceADT.remove(key);
+            result = sequenceADT.remove(key);
         }
-
-        System.out.println("Removed Successfully");
+        if (result != null) {
+            System.out.println(key + " has been removed successfully.");
+        }
 //        switchSequenceOrHash();
     }
 
@@ -140,26 +142,41 @@ public class Driver {
      * @param key2 - Second Keyy
      */
     public static void rangeKey(int key1, int key2) {
-        int counter = 0;
+        int counter = 1;
+        Integer[] arrayKeys = new Integer[get_size()];
+        int indexFirstKey = 0;
+        int indexSecondKey = 0;
         if(usingHashTableADT) {
             System.out.println("\nSearching for the number of keys within the following range: [" + key1 + ", " + key2 + "] in the hash table ADT.");
-            for(int i = key1; i <= key2 ; i++) {
-                for (int j = key1; j <= key2; ++j) {
-                    if (sequenceADT.sequence.get(i).getKey() == i) {
-                        counter++;
-                    }
+
+            arrayKeys = hashTableADT.allKeys();
+            for (int i=0; i<arrayKeys.length-1;i++) {
+                if (arrayKeys[i] == key1) {
+                    indexFirstKey = i;
+                }
+                if (arrayKeys[i] == key2) {
+                    indexSecondKey = i;
                 }
             }
-            System.out.println("There are: " + counter + " keys within the following range: [" + key1 + ", " + key2 + "]");
+            counter = indexSecondKey-indexFirstKey + 1;
         } else {
-            System.out.println("\nSearching for the number of keys within the following range: [" + key1 + ", " + key2 + "] in the hash table ADT.");
-            for(int i = key1; i <= key2 ; i++) {
-                for (int j = key1; j <= key2; ++j) {
-                    if (hashTableADT.hashTable.get(i).getKey() == i) {
-                        counter++;
-                    }
+            System.out.println("\nSearching for the number of keys within the following range: [" + key1 + ", " + key2 + "] in the sequence ADT.");
+
+            arrayKeys = sequenceADT.allKeys();
+            for (int i=0; i<arrayKeys.length-1;i++) {
+                if (arrayKeys[i] == key1) {
+                    indexFirstKey = i;
+                }
+                if (arrayKeys[i] == key2) {
+                    indexSecondKey = i;
                 }
             }
+            counter = indexSecondKey-indexFirstKey + 1;
+        }
+
+        if (counter <= 0) {
+            System.out.println("The range is not valid. Please try again.");
+        } else {
             System.out.println("There are: " + counter + " keys within the following range: [" + key1 + ", " + key2 + "]");
         }
     }
@@ -176,8 +193,8 @@ public class Driver {
             tempName = new Equipment("Equipment: " + hashTableADT.get_size());
             while (!unique) {
                 key = generateRandomKey();
-                String result = String.valueOf(hashTableADT.getValues(key));
-                if (result != null) {
+                Equipment result = hashTableADT.getValues(key);
+                if (result == null) {
                     unique = true;
                 }
             }
@@ -186,14 +203,14 @@ public class Driver {
             tempName = new Equipment("Equipment: " + sequenceADT.get_size());
             while (!unique) {
                 key = generateRandomKey();
-                String result = String.valueOf(sequenceADT.getValues(key));
-                if (result != null) {
+                Equipment result = sequenceADT.getValues(key);
+                if (result == null) {
                     unique = true;
                 }
             }
-            hashTableADT.add(key, tempName);
+            sequenceADT.add(key, tempName);
         }
-        System.out.print("Generation of non-existing key has been been done.");
+        System.out.println("Generation of non-existing key has been been done. The new key is: " + key);
     }
 
     /**
@@ -231,7 +248,7 @@ public class Driver {
             System.out.println("Cannot open file");
             System.exit(0);
         }
-        int counter = 1;
+        int counter = 0;
         while (inStream.hasNextLine() && counter < sequenceADT.getEINThreshold()) {
             int key = inStream.nextInt();
             counter++;
@@ -293,7 +310,6 @@ public class Driver {
         boolean isValid = false;
         int key=0;
         int key2=0;
-        scanner = null;
         if (option == 1) {
             allKeys();
         } else if (option == 2) {
@@ -302,7 +318,7 @@ public class Driver {
             while (!isValid) {
                 System.out.println("What is the key that you want to insert(8 digits):");
                 key = scanner.nextInt();
-                if (key!=8) {
+                if (String.valueOf(key).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -316,7 +332,7 @@ public class Driver {
             while (!isValid) {
                 System.out.println("What is the key that you want to remove(8 digits):");
                 key = scanner.nextInt();
-                if (key!=8) {
+                if (String.valueOf(key).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -328,7 +344,7 @@ public class Driver {
             while (!isValid) {
                 System.out.println("What is the key that you want the value(8 digits):");
                 key = scanner.nextInt();
-                if (key!=8) {
+                if (String.valueOf(key).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;
@@ -340,8 +356,12 @@ public class Driver {
             while (!isValid) {
                 System.out.println("What is the key that you want to know the next key(8 digits):");
                 key = scanner.nextInt();
-                if (key!=8) {
+                if (String.valueOf(key).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
+                } else if (usingHashTableADT && hashTableADT.getValues(key) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
+                } else if (usingSequenceADT && sequenceADT.getValues(key) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
                 } else {
                     isValid = true;
                 }
@@ -352,8 +372,12 @@ public class Driver {
             while (!isValid) {
                 System.out.println("What is the key that you want to know the previous key(8 digits):");
                 key = scanner.nextInt();
-                if (key!=8) {
+                if (String.valueOf(key).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
+                } else if (usingHashTableADT && hashTableADT.getValues(key) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
+                } else if (usingSequenceADT && sequenceADT.getValues(key) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
                 } else {
                     isValid = true;
                 }
@@ -363,18 +387,21 @@ public class Driver {
             while (!isValid) {
                 System.out.println("What is the first key(8 digits):");
                 key = scanner.nextInt();
-                if (key!=8) {
+                if (String.valueOf(key).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
+                } else if (usingHashTableADT && hashTableADT.getValues(key) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
+                } else if (usingSequenceADT && sequenceADT.getValues(key) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
                 } else {
                     isValid = true;
                 }
             }
             isValid = false;
-            scanner = null;
             while (!isValid) {
                 System.out.println("What is the second key(8 digits):");
                 key2 = scanner.nextInt();
-                if (key2!=8) {
+                if (String.valueOf(key2).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
                 } else {
                     isValid = true;

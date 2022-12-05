@@ -75,13 +75,13 @@ public class HashTable<E> extends ElasticERL<E> {
                 if(i < allKeys.length - 1) {
                     return allKeys[i+1];
                 } else {
-                    System.out.println("Next key of " + key + " does not exist.");
+                    System.out.println("The next key of " + key + " does not exist.");
                     return 0;
                 }
             }
         }
 
-        System.out.println("Next key of " + key + " does not exist.");
+        System.out.println("The next key of \" + key + \" does not exist.");
         return 0;
     }
 
@@ -96,13 +96,13 @@ public class HashTable<E> extends ElasticERL<E> {
                 if(i >= 1) {
                     return allKeys[i-1];
                 } else {
-                    System.out.println("Prev key of " + key + " does not exist.");
+                    System.out.println("The previous key of " + key + " does not exist.");
                     return 0;
                 }
             }
         }
 
-        System.out.println("Prev key of " + key + " does not exist.");
+        System.out.println("The previous key of " + key + " does not exist.");
         return 0;
     }
 

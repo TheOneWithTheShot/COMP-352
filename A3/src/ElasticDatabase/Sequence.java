@@ -26,12 +26,12 @@ public class Sequence<E> extends ElasticERL<E> {
             this.remove(key);
         } catch(Exception e) {
             sequence.add(new DatabaseEntry<E>(key, value));
-            set_size(_size++);
+            _size++;
             return;
         }
-        //System.out.println("Found duplicate for key " + key + ".\n");      
+        //System.out.println("Found duplicate for key " + key + ".\n");
         sequence.add(new DatabaseEntry<E>(key, value));
-        set_size(_size++);
+        _size++;
     }
 
     //remove the entry for the given key
@@ -40,55 +40,12 @@ public class Sequence<E> extends ElasticERL<E> {
             int index = search(key);
             DatabaseEntry<E> temp = sequence.get(index);
             sequence.remove(index);
-            set_size(_size--);
+            _size--;
             return temp;
-
-        } catch (NullPointerException e) {
+        } catch (NoSuchElementException e) {
             System.out.println("Key " + key + " does not exist");
             return null;
         }
-    }
-
-    public E getValues(int key) {
-        try {
-            int index = search(key);
-            return sequence.get(index).getValue();
-
-        } catch (NoSuchElementException e) {
-            System.out.println("Key " + key + " does not exist");
-        }
-
-        return null;
-    }
-
-    public int nextKey(int key) {
-        try {
-            int index = search(key);
-            if(sequence.get(index+1) != null) {
-                return sequence.get(index+1).getKey();
-            } else {
-                throw new NoSuchElementException();
-            }
-
-        } catch (NoSuchElementException e) {
-            System.out.println("Next key of " + key + " does not exist.");
-        }
-        return 0;
-    }
-
-    public int prevKey(int key) {
-        try {
-            int index = search(key);
-            if(sequence.get(index-1) != null) {
-                return sequence.get(index-1).getKey();
-            } else {
-                throw new NoSuchElementException();
-            }
-
-        } catch (NoSuchElementException e) {
-            System.out.println("Prev key of " + key + " does not exist.");
-        }
-        return 0;
     }
 
     public int search(int key) throws NoSuchElementException {
@@ -98,6 +55,57 @@ public class Sequence<E> extends ElasticERL<E> {
             }
         }
         throw new NoSuchElementException();
+    }
+
+    public E getValues(int key) {
+        try {
+            int index = search(key);
+            return sequence.get(index).getValue();
+
+        } catch (NoSuchElementException e) {
+        }
+
+        return null;
+    }
+
+    public int nextKey(int key) {
+        int nextKey = 0;
+        Integer[] arrayKeys = new Integer[_size];
+        arrayKeys = allKeys();
+
+        for (int i = 0; i <= arrayKeys.length-1; i++) {
+            if (arrayKeys[i] == key) {
+                if (i+1 <= (arrayKeys.length-1)) {
+                    nextKey= arrayKeys[i+1];
+                }
+            }
+        }
+        if (nextKey == 0){
+            System.out.println("The next key of " + key + " does not exist.");
+            return 0;
+        } else {
+            return nextKey;
+        }
+    }
+
+    public int prevKey(int key) {
+        int previousKey = 0;
+        Integer[] arrayKeys = new Integer[_size];
+        arrayKeys = allKeys();
+
+        for (int i = 0; i <= arrayKeys.length-1; i++) {
+            if (arrayKeys[i] == key) {
+                if (i-1 >= 0) {
+                    previousKey= arrayKeys[i-1];
+                }
+            }
+        }
+        if (previousKey == 0){
+            System.out.println("The previous key of " + key + " does not exist.");
+            return 0;
+        } else {
+            return previousKey;
+        }
     }
 
     //return all keys in ElasticERL as a sorted sequence;
@@ -114,17 +122,15 @@ public class Sequence<E> extends ElasticERL<E> {
 
     //sorting the sequence using insertion Sort O(n^2)
     public void insertionSort(Integer[] keys) {
-        int n = keys.length;
-        for(int i = 1; i< n; ++i) {
+        for (int i = 1; i < keys.length; i++) {
             int current = keys[i];
-            int j = i-1;
+            int j = i;
 
-            while(j >= 0 && current < keys[j]) {
-                keys[j+1] = keys[j];
+            while (j > 0 && keys[j - 1] < current) {
+                keys[j] = keys[j - 1];
                 j--;
-
             }
-            keys[j+1] = current;
+            keys[j] = current;
         }
     }
 }

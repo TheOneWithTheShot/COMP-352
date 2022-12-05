@@ -1,13 +1,8 @@
 package A3.src.ElasticDatabase;
 
 //This class defines an entry object that holds a integer key and a String value 
-public class Equipment<E>
-{
+public class Equipment {
 	String equipmentName;
-
-	public Equipment() {
-		this.equipmentName = "unknown";
-	}
 
 	public Equipment(String equipmentName) {
 		this.equipmentName = equipmentName;

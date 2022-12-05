@@ -11,8 +11,34 @@ public class Sequence<E> extends ElasticERL<E> {
         this(0);
     }
     public Sequence(int n) {
-        super();
         sequence = new ArrayList<DatabaseEntry<E>>(n);
+    }
+
+    //return all keys in ElasticERL as a sorted sequence;
+    public Integer[] allKeys() {
+        Integer[] result = new Integer[super.get_size()];
+        int ctr = 0;
+        for(DatabaseEntry<E> each : sequence) {
+            result[ctr] = each.getKey();
+            ctr++;
+        }
+        System.out.println("Number of keys: "+ allKeys().length);
+        insertionSort(result);
+        return result;
+    }
+
+    //sorting the sequence using insertion Sort O(n^2)
+    public void insertionSort(Integer[] keys) {
+        for (int i = 1; i < keys.length; i++) {
+            int current = keys[i];
+            int j = i;
+
+            while (j > 0 && keys[j - 1] < current) {
+                keys[j] = keys[j - 1];
+                j--;
+            }
+            keys[j] = current;
+        }
     }
 
     //add an entry for the given key and value;
@@ -61,15 +87,13 @@ public class Sequence<E> extends ElasticERL<E> {
             return sequence.get(index).getValue();
 
         } catch (NoSuchElementException e) {
+            return null;
         }
-
-        return null;
     }
 
     public int nextKey(int key) {
         int nextKey = 0;
-        Integer[] arrayKeys = new Integer[_size];
-        arrayKeys = allKeys();
+        Integer[] arrayKeys = allKeys();
 
         for (int i = 0; i <= arrayKeys.length-1; i++) {
             if (arrayKeys[i] == key) {
@@ -88,8 +112,7 @@ public class Sequence<E> extends ElasticERL<E> {
 
     public int prevKey(int key) {
         int previousKey = 0;
-        Integer[] arrayKeys = new Integer[_size];
-        arrayKeys = allKeys();
+        Integer[] arrayKeys = allKeys();
 
         for (int i = 0; i <= arrayKeys.length-1; i++) {
             if (arrayKeys[i] == key) {
@@ -103,32 +126,6 @@ public class Sequence<E> extends ElasticERL<E> {
             return 0;
         } else {
             return previousKey;
-        }
-    }
-
-    //return all keys in ElasticERL as a sorted sequence;
-    public Integer[] allKeys() {
-        Integer[] result = new Integer[super.get_size()];
-        int ctr = 0;
-        for(DatabaseEntry<E> each : sequence) {
-            result[ctr] = each.getKey();
-            ctr++;
-        }
-        insertionSort(result);
-        return result;
-    }
-
-    //sorting the sequence using insertion Sort O(n^2)
-    public void insertionSort(Integer[] keys) {
-        for (int i = 1; i < keys.length; i++) {
-            int current = keys[i];
-            int j = i;
-
-            while (j > 0 && keys[j - 1] < current) {
-                keys[j] = keys[j - 1];
-                j--;
-            }
-            keys[j] = current;
         }
     }
 }

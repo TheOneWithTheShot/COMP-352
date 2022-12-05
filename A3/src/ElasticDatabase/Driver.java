@@ -93,7 +93,7 @@ public class Driver {
         if (result != null) {
             System.out.println(key + " has been removed successfully.");
         } else {
-            System.out.println("Key " + key + " does not exist");
+            System.out.println("The provided key: " + key + " does not exist");
         }
     }
 
@@ -209,7 +209,7 @@ public class Driver {
             }
             sequenceADT.add(key, tempName);
         }
-        System.out.println("Generation of non-existing key has been been done. The new key is: " + key);
+        System.out.println("Generation of non-existing key has been done. The new key is: " + key);
     }
 
     /**
@@ -241,7 +241,7 @@ public class Driver {
 
         Scanner inStream = null;
         try {
-            System.out.println("\nThe program is currently opening file " + option + "...\n");
+            System.out.println("\nThe program is currently opening file " + option + "...");
             inStream = new Scanner(new FileInputStream(fileToOpen));
         } catch (FileNotFoundException e) {
             System.out.println("Cannot open file");
@@ -267,7 +267,11 @@ public class Driver {
                 hashTableADT.add(key, tempName);
             }
         }
-        System.out.println(counter);
+        if (usingHashTableADT) {
+            System.out.println("The program added all of the entries in the HashTableADT");
+        } else {
+            System.out.println("The program added all of the entries in the SequenceADT");
+        }
     }
 
     /**
@@ -409,6 +413,10 @@ public class Driver {
                 key2 = scanner.nextInt();
                 if (String.valueOf(key2).length() != 8) {
                     System.out.println("Please provide a valid key. Try again.");
+                } else if (usingHashTableADT && hashTableADT.getValues(key2) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
+                } else if (usingSequenceADT && sequenceADT.getValues(key2) == null) {
+                    System.out.println("The provided key has not been found. Try again.");
                 } else {
                     isValid = true;
                 }

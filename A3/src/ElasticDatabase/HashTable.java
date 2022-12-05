@@ -8,110 +8,22 @@ public class HashTable<E> extends ElasticERL<E> {
     Hashtable<Integer, DatabaseEntry<E>> hashTable;
 
     public HashTable() {
-        this(1000);
+        this(0);
     }
     public HashTable(int n) {
-        super();
         hashTable = new Hashtable<Integer, DatabaseEntry<E>>(n);
     }
 
-    //add an entry for the given key and value;
-    public void add(int key, E value) {
-        if( Integer.toString(key).length() != 8 ){
-            //System.out.println("Hashtable Error: Length is not 8.\n");
-            return;
-        }
-
-        //checks if key exists
-        DatabaseEntry<E> entry = new DatabaseEntry<>(key, value);
-        if(hashTable.containsKey(key)) {
-            //System.out.println("Found duplicate for key " + key + ".\n");
-            hashTable.replace(key, entry);
-            return;
-        }
-        hashTable.put(key, entry);
-        _size++;
-    }
-
-    //remove the entry for the given key
-    public DatabaseEntry<E> remove(int key) {
-        try {
-            DatabaseEntry<E> temp = hashTable.remove(key);
-            _size--;
-            return temp;
-        } catch (NullPointerException e) {
-            System.out.println("Key " + key + " does not exist");
-        }
-        return null;
-    }
-
-    public int search(int key) throws NoSuchElementException{
-        for (int i = 0; i< _size; ++i) {
-            if(hashTable.get(i).getKey() == key) {
-                return i;
-            }
-        }
-        throw new NoSuchElementException();
-    }
-
-    //return the values of the given key
-    public E getValues(int key) {
-        try {
-            int index = search(key);
-            return hashTable.get(index).getValue();
-
-        } catch (NoSuchElementException e) {
-        }
-        return null;
-    }
-
-    //return the key for the successor of key
-    public int nextKey(int key) {
-        Set<Integer> keys = hashTable.keySet();
-        Integer[] allKeys = keys.toArray(new Integer[keys.size()]);
-
-        for(int i = 0; i<allKeys.length; ++i) {
-            if(allKeys[i] == key) {
-                if(i < allKeys.length - 1) {
-                    return allKeys[i+1];
-                } else {
-                    System.out.println("The next key of " + key + " does not exist.");
-                    return 0;
-                }
-            }
-        }
-
-        System.out.println("The next key of \" + key + \" does not exist.");
-        return 0;
-    }
-
-    //return the key for the predecessor of key
-    public int prevKey(int key) {
-        //convert key set into array
-        Set<Integer> keys = hashTable.keySet();
-        Integer[] allKeys = keys.toArray(new Integer[keys.size()]);
-
-        for(int i = 0; i<allKeys.length; ++i) {
-            if(allKeys[i] == key) {
-                if(i >= 1) {
-                    return allKeys[i-1];
-                } else {
-                    System.out.println("The previous key of " + key + " does not exist.");
-                    return 0;
-                }
-            }
-        }
-
-        System.out.println("The previous key of " + key + " does not exist.");
-        return 0;
-    }
-
-    //returns all keys sorted using heap sort
+    /**
+     * returns all keys sorted using heap sort
+     * @return - return array with all the keys sorted
+     */
     public Integer[] allKeys() {
         //extract keys out from the hash table and converts it into an array
         Set<Integer> keys = hashTable.keySet();
         Integer[] arr = keys.toArray(new Integer[keys.size()]);
-        System.out.println("size is:"+ arr.length);
+        System.out.println("Number of keys: "+ arr.length);
+
 
         heapSort(arr); //Call heap sort
 
@@ -126,13 +38,14 @@ public class HashTable<E> extends ElasticERL<E> {
             heapDataStructure(arr, n, i);
 
         // One by one extract an element from heap
-        for (int i = n - 1; i > 0; i--) {
+        for (int i = n - 1; i >= 0; i--) {
+
             // Move current root to end
             int temp = arr[0];
             arr[0] = arr[i];
             arr[i] = temp;
 
-            // calls headDataStructure on a reduced heap
+            // call min heapify on the reduced heap
             heapDataStructure(arr, i, 0);
         }
     }
@@ -140,29 +53,102 @@ public class HashTable<E> extends ElasticERL<E> {
     // Creates a heap data structure from a binary tree using an array.
     // Starting at first index of a non-leaf node whose index is n/2 - 1.
     // Continue using recursion.
-    void heapDataStructure(Integer arr[], int n, int i)
-    {
-        int largest = i; // Initialize largest as root
+    void heapDataStructure(Integer[] arr, int n, int i) {
+        int smallest = i; // Initialize smallest as root
         int l = 2 * i + 1; // left = 2*i + 1
         int r = 2 * i + 2; // right = 2*i + 2
 
-        // If left child is larger than root
-        if (l < n && arr[l] > arr[largest])
-            largest = l;
+        // If left child is smaller than root
+        if (l < n && arr[l] < arr[smallest])
+            smallest = l;
 
-        // If right child is larger than largest so far
-        if (r < n && arr[r] > arr[largest])
-            largest = r;
+        // If right child is smaller than smallest so far
+        if (r < n && arr[r] < arr[smallest])
+            smallest = r;
 
-        // If largest is not root
-        if (largest != i) {
-            int swap = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = swap;
+        // If smallest is not root
+        if (smallest != i) {
+            int temp = arr[i];
+            arr[i] = arr[smallest];
+            arr[smallest] = temp;
 
-            // Recursive call
-            heapDataStructure(arr, n, largest);
+            // Recursively heapify the affected sub-tree
+            heapDataStructure(arr, n, smallest);
         }
     }
 
+    //add an entry for the given key and value;
+    public void add(int key, E value) {
+        if( Integer.toString(key).length() != 8 ){
+            return;
+        }
+
+        DatabaseEntry<E> entry = new DatabaseEntry<>(key, value);
+        if(hashTable.containsKey(key)) {
+            hashTable.replace(key, entry);
+            return;
+        }
+        hashTable.put(key, entry);
+        _size++;
+    }
+
+    //remove the entry for the given key
+    public DatabaseEntry<E> remove(int key) {
+        try {
+            DatabaseEntry<E> temp = hashTable.remove(key);
+            _size--;
+            return temp;
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    //return the values of the given key
+    public E getValues(int key) {
+        try {
+            return hashTable.get(key).getValue();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
+    //return the key for the successor of key
+    public int nextKey(int key) {
+        int nextKey = 0;
+        Integer[] arrayKeys = allKeys();
+
+        for (int i = 0; i <= arrayKeys.length-1; i++) {
+            if (arrayKeys[i] == key) {
+                if (i+1 <= (arrayKeys.length-1)) {
+                    nextKey= arrayKeys[i+1];
+                }
+            }
+        }
+        if (nextKey == 0){
+            System.out.println("The next key of " + key + " does not exist.");
+            return 0;
+        } else {
+            return nextKey;
+        }
+    }
+
+    //return the key for the predecessor of key
+    public int prevKey(int key) {
+        int previousKey = 0;
+        Integer[] arrayKeys = allKeys();
+
+        for (int i = 0; i <= arrayKeys.length-1; i++) {
+            if (arrayKeys[i] == key) {
+                if (i-1 >= 0) {
+                    previousKey= arrayKeys[i-1];
+                }
+            }
+        }
+        if (previousKey == 0){
+            System.out.println("The previous key of " + key + " does not exist.");
+            return 0;
+        } else {
+            return previousKey;
+        }
+    }
 }

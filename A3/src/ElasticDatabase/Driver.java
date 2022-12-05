@@ -75,7 +75,6 @@ public class Driver {
             sequenceADT.add(key, temp);
         }
         System.out.println("The key has been successfully added.");
-//        switchSequenceOrHash();
     }
 
     /**
@@ -83,7 +82,7 @@ public class Driver {
      * @param key - key
      */
     public static void remove(int key) {
-        DatabaseEntry result = null;
+        DatabaseEntry<Equipment> result = null;
         if(usingHashTableADT) {
             System.out.println("\nThe program is removing this key: "+ key +" from the hash table ADT.");
             result = hashTableADT.remove(key);
@@ -93,8 +92,9 @@ public class Driver {
         }
         if (result != null) {
             System.out.println(key + " has been removed successfully.");
+        } else {
+            System.out.println("Key " + key + " does not exist");
         }
-//        switchSequenceOrHash();
     }
 
     /**
@@ -158,7 +158,6 @@ public class Driver {
                     indexSecondKey = i;
                 }
             }
-            counter = indexSecondKey-indexFirstKey + 1;
         } else {
             System.out.println("\nSearching for the number of keys within the following range: [" + key1 + ", " + key2 + "] in the sequence ADT.");
 
@@ -171,8 +170,8 @@ public class Driver {
                     indexSecondKey = i;
                 }
             }
-            counter = indexSecondKey-indexFirstKey + 1;
         }
+        counter = indexSecondKey-indexFirstKey + 1;
 
         if (counter <= 0) {
             System.out.println("The range is not valid. Please try again.");
@@ -251,7 +250,7 @@ public class Driver {
         int counter = 0;
         int threshold = 0;
 
-        if (usingHashTableADT == true) {
+        if (usingHashTableADT) {
             threshold = hashTableADT.getEINThreshold();
         } else {
             threshold = sequenceADT.getEINThreshold();

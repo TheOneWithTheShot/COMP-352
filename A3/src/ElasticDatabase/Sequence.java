@@ -29,7 +29,6 @@ public class Sequence<E> extends ElasticERL<E> {
             _size++;
             return;
         }
-        //System.out.println("Found duplicate for key " + key + ".\n");
         sequence.add(new DatabaseEntry<E>(key, value));
         _size++;
     }
@@ -43,7 +42,6 @@ public class Sequence<E> extends ElasticERL<E> {
             _size--;
             return temp;
         } catch (NoSuchElementException e) {
-            System.out.println("Key " + key + " does not exist");
             return null;
         }
     }

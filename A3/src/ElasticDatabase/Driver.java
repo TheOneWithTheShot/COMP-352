@@ -113,7 +113,7 @@ public class Driver {
         if(temp == null) {
             System.out.println("No keys have been found");
         } else {
-            System.out.println("Here's the value of key " + key +": " + temp);
+            System.out.println("Here's the value of key " + key +": " + temp.equipmentName);
         }
     }
 

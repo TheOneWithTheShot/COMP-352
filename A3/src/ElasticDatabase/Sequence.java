@@ -40,7 +40,7 @@ public class Sequence<E> extends ElasticERL {
             result[counter] = each.getKey();
             counter++;
         }
-        System.out.println("Number of keys: "+ allKeys().length);
+        System.out.println("Number of keys: "+ counter);
         insertionSort(result);
         return result;
     }

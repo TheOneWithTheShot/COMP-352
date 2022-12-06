@@ -56,16 +56,14 @@ public class ElasticERL
 	 * get Threshold
 	 * @return - returns threshold
 	 */
-	public int getEINThreshold() 
-	{
+	public int getEINThreshold() {
 		return this.EINThreshold;
 	}
 
 	/**
 	 * set Threshold
 	 */
-	public void setEINThreshold(int Size) 
-	{
+	public void setEINThreshold(int Size){
 		if(Size < 100 || Size > 500000)
 		{
 			System.out.println("Unable to set the threshold, size is not within the range 100 to 500000"); 
